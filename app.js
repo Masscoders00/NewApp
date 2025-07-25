@@ -11,59 +11,43 @@ const getData = async(input) =>{
     let jsonData = await res.json();
     console.log(jsonData.articles);
 
-    searchType.innerText="Search : "+input;
-    inputData.value=""
-    cardData.innerHTML="";
-     jsonData.articles.forEach(function(article){
+    searchType.innerText = "Search : " + input;
+    inputData.value = "";
+    cardData.innerHTML = "";
+
+    jsonData.articles.forEach(function(article){
         console.log(article);
         
-    let divs = document.createElement("div");
-    divs.classList.add("card");
-    cardData.appendChild(divs);
+        let divs = document.createElement("div");
+        divs.classList.add("card");
+        cardData.appendChild(divs);
 
-    divs.innerHTML=`
-    <img src="${article.urlToImage}" alt="">
-    <h3>${article.title}</h3>
-    <p>${article.description}</p>
+        divs.innerHTML = `
+        <img src="${article.image || 'https://via.placeholder.com/400x200?text=No+Image'}" alt="">
+        <h3>${article.title}</h3>
+        <p>${article.description}</p>
+        `;
 
-    `
-    divs.addEventListener("click", function(){
-        window.open(article.url);
-    })
-     })
- 
+        divs.addEventListener("click", function(){
+            window.open(article.url, "_blank");
+        });
+    });
 }
 
 window.addEventListener("load", function(){
-    getData("India")
-})
-
+    getData("India");
+});
 
 SearchBtn.addEventListener("click", function(){
     let inputText = inputData.value;
-    getData(inputText);
-})
- 
+    if (inputText.trim() !== "") {
+        getData(inputText);
+    }
+});
+
 function navClick(navName){
-
-    if(navName == "politics"){
-        document.getElementById("politics").style.color="rgb(0, 140, 255)";
-        document.getElementById("sports").style.color="white";
-        document.getElementById("technology").style.color="white";
-
-    }
-
-    if(navName == "sports"){
-        document.getElementById("politics").style.color="white";
-        document.getElementById("sports").style.color="rgb(0, 140, 255)";
-        document.getElementById("technology").style.color="white";
-
-    }
-    if(navName == "technology"){
-        document.getElementById("politics").style.color="white";
-        document.getElementById("sports").style.color="white";
-        document.getElementById("technology").style.color="rgb(0, 140, 255)";
-
-    }
-    getData(navName)
+    ["politics", "sports", "technology"].forEach(cat => {
+        document.getElementById(cat).style.color = (cat === navName) ? "rgb(0, 140, 255)" : "white";
+    });
+    getData(navName);
 }
