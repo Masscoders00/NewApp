@@ -1,1 +1,30 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily News</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <div class="logo">
+        <h1>Daily News</h1>
+        <li id="politics" onclick="navClick('politics')">Politics</li>
+        <li id="sports" onclick="navClick('sports')">Sports</li>
+        <li id="technology" onclick="navClick('technology')">Technology</li>
+      </div>
+      <div class="searchBar">
+        <input type="text" id="inputData" placeholder="Search Here.." />
+        <button id="searchBtn">Search</button>
+      </div>
+    </nav>
+    <div class="category">
+      <h1 id="type">Search: India</h1>
+    </div>
+    <div class="cardData" id="cardData"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
