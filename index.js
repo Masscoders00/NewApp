@@ -1,4 +1,4 @@
-let key = "f177d244f82c4032bd7ee24566e33841";
+let key = "e9b8b3233545d502a15cfc629d3d2056";
 
 let dataCard = document.querySelector(".dataCard");
 let search = document.getElementById("searchBtn");
@@ -7,7 +7,8 @@ let inputDatas = document.getElementById("inputData");
 let category = document.getElementById("type");
 
 let myFun = async (input) => {
-  let data = await fetch(`https://gnews.io/api/v4/search?q=${input}&token=${key}`);
+  let res = await fetch(
+    `https://gnews.io/api/v4/search?q=${input}&token=${key}&lang=en`);
 
   let jsonData = await data.json();
   console.log(jsonData);
