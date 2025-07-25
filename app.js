@@ -1,11 +1,12 @@
-let key = "f177d244f82c4032bd7ee24566e33841";
+let key = "e9b8b3233545d502a15cfc629d3d2056";
 let cardData = document.querySelector(".cardData");
 let SearchBtn = document.getElementById("searchBtn");
 let inputData = document.getElementById("inputData");
 let searchType = document.getElementById("type");
 
 const getData = async(input) =>{
-    let res = await fetch(`https://gnews.io/api/v4/search?q=${input}&token=${key}`);
+    let res = await fetch(
+    `https://gnews.io/api/v4/search?q=${input}&token=${key}&lang=en`);
 
     let jsonData = await res.json();
     console.log(jsonData.articles);
