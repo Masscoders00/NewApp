@@ -8,14 +8,21 @@ let category = document.getElementById("type");
 
 let myFun = async (input) => {
   let res = await fetch(
-    `https://gnews.io/api/v4/search?q=${input}&token=${key}&lang=en`);
+    `https://gnews.io/api/v4/search?q=${input}&token=${key}&lang=en`
+  );
 
-  let jsonData = await data.json();
+  let jsonData = await res.json(); // FIXED
   console.log(jsonData);
 
   category.innerHTML = "Search : " + input;
   dataCard.innerHTML = "";
   inputDatas.value = "";
+
+  if (!jsonData.articles || jsonData.articles.length === 0) {
+    dataCard.innerHTML = "<p>No articles found.</p>";
+    return;
+  }
+
   jsonData.articles.forEach((curVal) => {
     console.log(curVal);
 
@@ -24,22 +31,26 @@ let myFun = async (input) => {
     dataCard.appendChild(divs);
 
     divs.innerHTML = `
-
-        <img src="${curVal.urlToImage}" alt="">
+        <img src="${curVal.image || 'https://via.placeholder.com/400x200?text=No+Image'}" alt="">
         <h3>${curVal.title}</h3>
         <p>${curVal.description}</p>
-        
-        `;
+    `;
+
     divs.addEventListener("click", function () {
       window.open(curVal.url, "_blank");
     });
   });
 };
-window.addEventListener("load", myFun("India"));
+
+window.addEventListener("load", () => {
+  myFun("India");
+});
+
+search.addEventListener("click", getData);
 
 function getData() {
   let inputVal = inputDatas.value;
-  if (inputVal == "") {
+  if (inputVal.trim() === "") {
     alert("Please Search");
   } else {
     myFun(inputVal);
@@ -47,21 +58,11 @@ function getData() {
 }
 
 function navItem(navValue) {
-  if (navValue == "politics") {
-    document.getElementById("politics").classList.add("active");
-    document.getElementById("sports").classList.remove("active");
-    document.getElementById("technology").classList.remove("active");
-  }
-  if (navValue == "sports") {
-    document.getElementById("politics").classList.remove("active");
-    document.getElementById("sports").classList.add("active");
-    document.getElementById("technology").classList.remove("active");
-  }
-  if (navValue == "technology") {
-    document.getElementById("politics").classList.remove("active");
-    document.getElementById("sports").classList.remove("active");
-    document.getElementById("technology").classList.add("active");
-  }
+  const tabs = ["politics", "sports", "technology"];
+  tabs.forEach((tab) => {
+    document.getElementById(tab).classList.remove("active");
+  });
+  document.getElementById(navValue).classList.add("active");
 
   myFun(navValue);
 }
