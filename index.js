@@ -7,7 +7,8 @@ let inputDatas = document.getElementById("inputData");
 let category = document.getElementById("type");
 
 let myFun = async (input) => {
-  let data = await fetch(`https://newsapi.org/v2/everything?q=${input}&apiKey=${key}`);
+  let data = await fetch(`https://gnews.io/api/v4/search?q=${input}&token=${key}`);
+
   let jsonData = await data.json();
   console.log(jsonData);
 
